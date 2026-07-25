@@ -139,7 +139,7 @@ body::before {
    ======================================================= */
 .secao-apresentacao {
     background-color: transparent;
-    padding-top: 100px;
+    padding-top: 0px;
     padding-bottom: 0;
     margin: 0 20px;
 }
