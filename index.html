@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
     <!-- CSS Local -->
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="data:,">
@@ -30,28 +32,26 @@
             Espanhol com <span class="destaque-1">Raquel</span>
         </div>
         <div class="menu" id="menu-links">
-            <a href="#sobre-mim" class="meu-link">Sobre Mí</a>
+            <a href="#sobre-raquel" class="meu-link">Sobre Mí</a>
             <a href="#opiniones" class="meu-link">Opiniones</a>
             <a href="#contacto" class="meu-link">Contacto</a>
         </div>
     </nav>
 
-    <!-- SEÇÃO: SOBRE MIM -->
+    <!-- SEÇÃO 1: SOBRE MIM -->
     <section id="sobre-raquel" class="secao-apresentacao">
-    <div class="container-apresentacao">
-        
-        <!-- Arte para Computador (aparece em telas grandes) -->
-        <img src="img-apresentação-desktop.PNG" alt="Presentación de Raquel" class="arte-desktop">
-        
-        <!-- Arte para Celular (aparece em telas pequenas) -->
-        <img src="img-apresentação-mobile.PNG" alt="Presentación de Raquel" class="arte-mobile">
-        
-    </div>
-</section>
+        <div class="container-apresentacao">
+            <!-- Arte para Computador -->
+            <img src="img-apresentação-desktop.PNG" alt="Presentación de Raquel" class="arte-desktop">
 
-    <!-- SEÇÃO: VIDEO / CLASSE GRATIS -->
+            <!-- Arte para Celular -->
+            <img src="img-apresentação-mobile.PNG" alt="Presentación de Raquel" class="arte-mobile">
+        </div>
+    </section>
+
+    <!-- SEÇÃO 2: VÍDEO / CLASSE GRÁTIS -->
     <section id="clase-gratis" class="secao-video">
-        <h2>🎬 Prueba uma clase real con <span class="destaque-1">Raquel</span></h2>
+        <h2>🎬 Prueba una clase real con <span class="destaque-1">Raquel</span></h2>
         <p>En solo 5 minutos, descubre cómo mi metodología te lleva a la fluidez.</p>
 
         <div class="container-flex-video">
@@ -61,51 +61,98 @@
                     <br>
                     <li>✅ Trucos de pronunciación real.</li>
                     <br>
-                    <li>✅ Una expressão comum na Espanha.</li>
+                    <li>✅ Una expresión común en España.</li>
                 </ul>
             </div>
 
             <div class="coluna-video">
                 <div class="player-video">
-                    <!-- Se for usar um arquivo de vídeo local, o ideal é usar a tag video -->
-                    <video controls src="meu-video.mp4" poster="foto-raquel.jpeg" style="width: 100%; max-width: 100%; border-radius: 8px;"></video>
+                    <video controls src="meu-video.mp4" poster="img-apresentação-desktop.PNG"
+                        style="width: 100%; max-width: 100%; border-radius: 8px;"></video>
                 </div>
             </div>
         </div>
 
         <div class="container-botao">
-            <a href="#teste-nivel" class="btn-cta-2">Me encantó. ¡Ver mi nível ahora!</a>
+            <a href="#teste-nivel" class="btn-cta-2">Me encantó. ¡Ver mi nivel ahora!</a>
         </div>
     </section>
 
-    <!-- SEÇÃO: TESTE DE NÍVEL COM IA -->
+    <!-- SEÇÃO 3: DIAGNÓSTICO E SIMULADOR DE NÍVEL INTERATIVO -->
     <section id="teste-nivel" class="secao-ia">
         <div class="container-ia">
+
             <div class="cabecalho-ia">
-                <div class="badge-tecnologia">✨ Inteligência Artificial</div>
-                <h2>Descubre tu <span class="destaque-ia">Nivel Real</span> de Español</h2>
-                <p>Responde 5 preguntas rápidas y nuestra IA analizará tu fluidez para recomendarte el mejor plan de estudio.</p>
+                <div class="badge-tecnologia">✨ Diagnóstico Inteligente</div>
+                <h2>Descubra seu <span class="destaque-ia">Nível Real</span> de Espanhol</h2>
+                <p>Preencha os dados e responda às questões rápidas para receber sua análise completa.</p>
             </div>
 
             <div class="card-interativo-ia">
-                <div class="pergunta-header">
-                    <span class="progresso">Pregunta 1 de 5</span>
-                </div>
 
-                <div class="pergunta-corpo">
-                    <h3>¿Cómo describirías tu capacidad de mantener una conversación en español hoy?</h3>
-                    <div class="opcoes-respostas">
-                        <button class="btn-opcao">Entiendo casi todo, pero me trabo al hablar.</button>
-                        <button class="btn-opcao">Solo conozco palabras básicas y saludos.</button>
-                        <button class="btn-opcao">Hablo bien, pero necesito sonar más profesional.</button>
-                        <button class="btn-opcao">Nunca he estudiado español antes.</button>
+                <!-- ETAPA 1: DADOS INICIAIS DO ALUNO -->
+                <div class="etapa-teste active" id="etapa-1">
+                    <h3>1. Vamos começar! Preencha seus dados:</h3>
+
+                    <div class="grupo-campo">
+                        <label for="aluno-nome">Nome Completo</label>
+                        <input type="text" id="aluno-nome" placeholder="Digite seu nome completo"
+                            class="input-diagnostico">
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label for="aluno-whatsapp">WhatsApp (com DDD)</label>
+                        <input type="tel" id="aluno-whatsapp" placeholder="(85) 99999-9999" class="input-diagnostico">
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label for="aluno-objetivo">Qual seu principal objetivo com o espanhol?</label>
+                        <select id="aluno-objetivo" class="input-diagnostico">
+                            <option value="" disabled selected>Selecione uma opção...</option>
+                            <option value="Viagens">Viagens a trabalho ou lazer</option>
+                            <option value="Carreira / Entrevistas">Crescimento profissional / Entrevistas</option>
+                            <option value="Estudos / Intercâmbio">Estudos / Provas de proficiência</option>
+                            <option value="Hobby / Pessoal">Desenvolvimento pessoal / Conversação</option>
+                        </select>
                     </div>
                 </div>
+
+                <!-- ETAPA 2: ÁREA DAS PERGUNTAS DINÂMICAS (Preenchida pelo JS) -->
+                <div class="etapa-teste" id="etapa-2" style="display: none;">
+                    <div id="area-perguntas-dinamicas">
+                        <!-- O JavaScript vai injetar o HTML da pergunta aqui -->
+                    </div>
+                </div>
+
+                <!-- ETAPA 3: RESULTADO DO DIAGNÓSTICO + RECOMENDAÇÃO -->
+                <div class="etapa-teste" id="etapa-3" style="display: none;">
+                    <div class="resultado-box">
+                        <div class="icone-resultado">🎉</div>
+                        <h3>Diagnóstico Concluído!</h3>
+                        <p id="resultado-texto-nivel">Analisando seu perfil...</p>
+
+                        <!-- RECOMENDAÇÃO AUTOMÁTICA DE PLANO -->
+                        <div class="card-plano-recomendado" id="plano-sugerido">
+                            <h4>Plano Recomendado para Você:</h4>
+                            <div class="nome-plano" id="nome-plano">Nome do Plano</div>
+                            <p id="desc-plano">Descrição personalizada do plano ideal para o seu nível.</p>
+                        </div>
+
+                        <!-- Botão final que abre o WhatsApp -->
+                        <button type="button" class="btn-enviar-final" onclick="enviarDadosWhatsApp()">
+                            💬 Agendar aula experimental no WhatsApp
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BOTÃO PRINCIPAL DE NAVEGAÇÃO (Fora das etapas) -->
+                <button type="button" class="btn-proximo" id="btn-proximo-ia">Iniciar Teste de Nível ➔</button>
+
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO: POR QUE ESTUDAR -->
+    <!-- SEÇÃO 4: POR QUE ESTUDAR COM A RAQUEL -->
     <section class="secao-cards">
         <h2 class="titulo-cards">¿Por qué estudiar con <span class="destaque-1">Raquel</span>?</h2>
 
@@ -113,32 +160,37 @@
             <div class="card-item">
                 <div class="icone-card">🎯</div>
                 <h3>Clases 100% Personalizadas</h3>
-                <p>Contenido enfocado en tus objetivos profesionales, ya sea para entrevistas, reuniones o viajes de negocios.</p>
+                <p>Contenido enfocado en tus objetivos profesionales, ya sea para entrevistas, reuniones o viajes de
+                    negocios.</p>
             </div>
 
             <div class="card-item">
                 <div class="icone-card">⏰</div>
                 <h3>Flexibilidad Total</h3>
-                <p>Agenda tus clases en los horarios que mejor se adapten a tu rutina loca de trabalho. Sin perder tiempo.</p>
+                <p>Agenda tus clases en los horarios que mejor se adapten a tu rutina loca de trabalho. Sin perder
+                    tiempo.</p>
             </div>
 
             <div class="card-item">
                 <div class="icone-card">🗣️</div>
                 <h3>Foco en la Conversación</h3>
-                <p>Metodología práctica para que dejes el miedo atrás y empieces a hablar español con seguridad desde la primera clase.</p>
+                <p>Metodología práctica para que dejes el miedo atrás y empieces a hablar español con seguridad desde la
+                    primera clase.</p>
             </div>
         </div>
     </section>
 
-    <!-- SEÇÃO: DEPOIMENTOS / OPINIONES -->
+    <!-- SEÇÃO 5: DEPOIMENTOS / OPINIONES -->
     <section id="opiniones" class="secao-feedback">
         <h2>Lo que dicen los <span class="destaque-1">Alumnos</span></h2>
-        <p class="subtitulo-feedback">Historias reales de profesionales que transformaron sus carreras con el español.</p>
+        <p class="subtitulo-feedback">Historias reales de profesionales que transformaron sus carreras con el español.
+        </p>
 
         <div class="container-feedback">
             <div class="card-feedback">
                 <div class="topo-feedback">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Aluno 1" class="foto-aluno">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100"
+                        alt="Aluno 1" class="foto-aluno">
                     <div class="dados-aluno">
                         <h4>Gabriela Soares</h4>
                         <span>Gerente de Proyectos</span>
@@ -146,12 +198,15 @@
                     <div class="aspas">”</div>
                 </div>
                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                <p class="texto-feedback">"Las clases con Raquel foram um divisor de águas. Eu precisava liderar reuniões com a equipe do México e não tinha segurança. A metodologia direta me deu a fluidez que eu precisava em tempo recorde."</p>
+                <p class="texto-feedback">"Las clases con Raquel foram um divisor de águas. Eu precisava liderar
+                    reuniões com a equipe do México e não tinha segurança. A metodologia direta me deu a fluidez que eu
+                    precisava em tempo recorde."</p>
             </div>
 
             <div class="card-feedback">
                 <div class="topo-feedback">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100" alt="Aluno 2" class="foto-aluno">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100"
+                        alt="Aluno 2" class="foto-aluno">
                     <div class="dados-aluno">
                         <h4>Lucas Ribeiro</h4>
                         <span>Analista de TI Internacional</span>
@@ -159,12 +214,14 @@
                     <div class="aspas">”</div>
                 </div>
                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                <p class="texto-feedback">"Increíble. Las clases son dinámicas y totalmente personalizadas para mi área de tecnología. En menos de 3 meses logré pasar una entrevista técnica en una empresa de España."</p>
+                <p class="texto-feedback">"Increíble. Las clases son dinámicas y totalmente personalizadas para mi área
+                    de tecnología. En menos de 3 meses logré pasar una entrevista técnica en una empresa de España."</p>
             </div>
 
             <div class="card-feedback">
                 <div class="topo-feedback">
-                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" alt="Aluno 3" class="foto-aluno">
+                    <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100"
+                        alt="Aluno 3" class="foto-aluno">
                     <div class="dados-aluno">
                         <h4>Mariana Costa</h4>
                         <span>Directora de Marketing</span>
@@ -172,7 +229,8 @@
                     <div class="aspas">”</div>
                 </div>
                 <div class="estrelas">⭐⭐⭐⭐⭐</div>
-                <p class="texto-feedback">"Raquel entende a dor de quem tem a rotina corrida. O material é focado no espanhol corporativo real, sem enrolação. Recomendo de olhos fechados para qualquer executivo."</p>
+                <p class="texto-feedback">"Raquel entende a dor de quem tem a rotina corrida. O material é focado no
+                    espanhol corporativo real, sem enrolação. Recomendo de olhos fechados para qualquer executivo."</p>
             </div>
         </div>
     </section>
@@ -185,13 +243,14 @@
                 <div class="logo-rodape">
                     Espanhol com <span class="destaque-1">Raquel</span>
                 </div>
-                <p>Conectando profesionales brasileños con el mundo hispanohablante a través de un método práctico y personalizado.</p>
+                <p>Conectando profesionales brasileños con el mundo hispanohablante a través de un método práctico y
+                    personalizado.</p>
             </div>
 
             <div class="coluna-rodape links-uteis">
                 <h3>Navegación</h3>
                 <ul>
-                    <li><a href="#sobre-mim">Sobre Mí</a></li>
+                    <li><a href="#sobre-raquel">Sobre Mí</a></li>
                     <li><a href="#clase-gratis">Clase de Prueba</a></li>
                     <li><a href="#opiniones">Opiniones</a></li>
                     <li><a href="#teste-nivel">Test de Nivel</a></li>
@@ -204,7 +263,8 @@
                 <p>💬 +55 (00) 99999-9999</p>
 
                 <div class="icones-redes">
-                    <a href="https://www.instagram.com/espanolconraquel_?igsh=dnlrdHI2ZWp3dXR4" target="_blank" title="Instagram">📸 Instagram</a>
+                    <a href="https://www.instagram.com/espanolconraquel_?igsh=dnlrdHI2ZWp3dXR4" target="_blank"
+                        title="Instagram">📸 Instagram</a>
                     <a href="https://www.tiktok.com/@raquel_espanhol" target="_blank" title="TikTok">🎵 TikTok</a>
                 </div>
             </div>
@@ -217,13 +277,14 @@
         </div>
     </footer>
 
-    <!-- BOTÃO FLUTUANTE -->
+    <!-- BOTÃO FLUTUANTE NOTION -->
     <a href="#" target="_blank" class="btn-flutuante-notion">
         <span class="icone-agenda">📅</span> Ver Horarios Disponibles
     </a>
 
-    <!-- SCRIPT JS -->
+    <!-- SCRIPT JS LOCAL -->
     <script src="script.js"></script>
 
 </body>
+
 </html>

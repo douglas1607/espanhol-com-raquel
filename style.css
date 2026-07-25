@@ -1,10 +1,14 @@
 /* =======================================================
-   VARS E CONFIGURAÇÕES GERAIS 
+   1. VARS E CONFIGURAÇÕES GERAIS 
    ======================================================= */
 :root {
     --verde: #3e815f;
     --terracota: #ec5a41;
     --bege: #efe2d2;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 html {
@@ -16,11 +20,30 @@ body {
     font-family: "Montserrat", sans-serif;
     background: linear-gradient(to right, #142d20, var(--verde));
     background-attachment: fixed;
+    position: relative;
+    overflow-x: hidden;
 }
 
-/* =======================================================
-   ELEMENTOS GLOBAIS / DESTAQUES
-   ======================================================= */
+/* Marca-d'água suave no fundo do site */
+body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60vw;
+    height: 60vw;
+    max-width: 600px;
+    max-height: 600px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Elementos globais de destaque */
 .destaque-1 {
     color: var(--terracota);
 }
@@ -33,7 +56,7 @@ body {
 .badge-tecnologia {
     display: inline-block;
     background-color: var(--verde);
-    color: #efe2d2;
+    color: var(--bege);
     font-size: 12px;
     font-weight: bold;
     text-transform: uppercase;
@@ -45,7 +68,7 @@ body {
 }
 
 /* =======================================================
-   BARRA DE NAVEGAÇÃO (NAV-BAR COMPLETA)
+   2. BARRA DE NAVEGAÇÃO (NAV-BAR)
    ======================================================= */
 .nav-bar {
     position: fixed;
@@ -55,37 +78,41 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0;
-    background-color: rgba(239, 226, 210, 0.95);
+    padding: 15px 30px;
+    background-color: rgba(239, 226, 210, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: var(--verde);
     font-weight: bold;
-    border-radius: 12px;
+    border-radius: 0 0 12px 12px;
     z-index: 9999;
     transition: all 0.3s ease;
 }
 
-/* Classe ativada via JavaScript ao rolar a página */
 .nav-bar.nav-rolando {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-    background-color: #efe2d2;
+    background-color: var(--bege);
 }
 
 .logo {
-    margin-left: 20px;
-    font-size: 40px;
+    font-size: 32px;
     text-align: center;
 }
 
 .menu {
-    margin-top: 10px;
-    margin-right: 20px;
+    display: flex;
+    gap: 15px;
 }
 
 .meu-link {
-    font-size: 20px;
+    font-size: 18px;
     text-decoration: none;
-    margin-left: 10px;
-    color: #3e815f;
+    color: var(--verde);
+    transition: color 0.3s ease;
+}
+
+.meu-link:hover {
+    color: var(--terracota);
 }
 
 .menu-hamburguer {
@@ -108,118 +135,58 @@ body {
 }
 
 /* =======================================================
-   SEÇÃO: SOBRE MIM
+   3. SEÇÃO: SOBRE MIM / APRESENTAÇÃO
    ======================================================= */
-/* --- AJUSTE FINO DA SEÇÃO DE APRESENTAÇÃO --- */
 .secao-apresentacao {
-    width: 100%;
-    background-color:transparent; /* Mantém o bege de fundo da Raquel */
-    
-    /* Espaço no TOPO: Garante que fique logo abaixo da navbar sem grudar */
-    padding-top: 30px; 
-    
-    /* Espaço na PARTE DE BAIXO: Diminuído para não ficar muito distante da próxima seção */
-    padding-bottom: 0px; 
-    
-    overflow: hidden;
+    background-color: transparent;
+    padding-top: 100px;
+    padding-bottom: 0;
+    margin: 0 20px;
 }
 
 .container-apresentacao {
-    /* O segredo dos 20px nas laterais: */
-    /* Usamos calc(100% - 40px) para descontar 20px da esquerda e 20px da direita */
-    width: calc(100% - 40px); 
-    
-    /* Centraliza a caixa na tela */
-    margin: 0 auto; 
+    width: 100%;
+    margin: 0 auto;
 }
 
 .container-apresentacao img {
-    width: 100%;       /* Ocupa todo o espaço do container (já com os descontos) */
-    height: auto;      /* Mantém a proporção sem distorcer a arte */
-    display: block;    /* Remove espaços em branco fantasmas abaixo */
-    border-radius: 15px; /* Opcional: deixa as bordinhas da foto levemente arredondadas se quiser combinar com o site */
-}
-.pilares-raquel {
-    display: flex;
-    gap: 25px;
-    margin: 50px 0;
-}
-
-.pilar-card {
-    background-color: var(--bege);
-    color: var(--verde);
-    flex: 1;
-    padding: 30px 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    border-bottom: 5px solid var(--terracota);
-    transition: transform 0.3s;
-}
-
-.pilar-card:hover {
-    transform: translateY(-8px);
-}
-
-.pilar-icone {
-    font-size: 35px;
+    width: 100%;
+    height: auto;
     display: block;
-    margin-bottom: 15px;
+    border-radius: 30px;
+    object-fit: cover;
 }
 
-.pilar-card h3 {
-    font-size: 22px;
-    margin: 0 0 10px 0;
-    color: var(--verde);
+.arte-desktop {
+    display: block !important;
 }
 
-.pilar-card p {
-    font-size: 15px;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.frase-impacto {
-    margin-top: 60px;
-    border-left: 4px solid var(--terracota);
-    padding-left: 20px;
-    display: inline-block;
-    max-width: 700px;
-    text-align: left;
-}
-
-.frase-impacto blockquote {
-    font-size: 24px;
-    font-style: italic;
-    margin: 0 0 10px 0;
-}
-
-.frase-impacto cite {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--terracota);
-    display: block;
+.arte-mobile {
+    display: none !important;
 }
 
 /* =======================================================
-   SEÇÃO: CLASSE DE VÍDEO
+   4. SEÇÃO: CLASSE DE VÍDEO
    ======================================================= */
 .secao-video {
-    padding: 20px;
+    padding: 40px 20px;
     background-color: rgba(239, 226, 210, 1.0);
     margin: 20px 20px 30px 20px;
     border-radius: 30px;
+    position: relative;
+    z-index: 1;
 }
 
 .secao-video h2 {
     text-align: center;
-    font-size: 54px;
+    font-size: 42px;
     color: var(--verde);
-    margin: 20px 0 20px 0;
+    margin: 20px 0;
 }
 
 .secao-video p {
     text-align: center;
-    font-size: 30px;
+    font-size: 24px;
     color: var(--verde);
     margin-bottom: 30px;
 }
@@ -228,7 +195,7 @@ body {
     display: flex;
     gap: 50px;
     max-width: 1200px;
-    font-size: 30px;
+    font-size: 22px;
     align-items: center;
     margin: 0 auto;
 }
@@ -239,20 +206,15 @@ body {
 }
 
 .player-video {
-    background: #3e815f;
+    background: var(--verde);
     position: relative;
     border-radius: 30px;
     border: 8px solid var(--verde);
     overflow: hidden;
 }
 
-.player-video iframe {
-    border: none;
-    top: 0;
-    left: 0;
-    width: 500px;
-    height: 300px;
-    border-radius: 30px;
+.player-video video {
+    border-radius: 20px;
 }
 
 .container-botao {
@@ -264,7 +226,7 @@ body {
 
 .btn-cta-2 {
     padding: 15px 40px;
-    background-color: #ec5a41;
+    background-color: var(--terracota);
     border-radius: 50px;
     color: #ffffff;
     font-size: 18px;
@@ -273,7 +235,7 @@ body {
     text-decoration: none;
     text-transform: uppercase;
     letter-spacing: 1px;
-    box-shadow: 0 8px 15px black;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     cursor: pointer;
     border: none;
@@ -286,39 +248,39 @@ body {
 }
 
 /* =======================================================
-   SEÇÃO: INTELIGÊNCIA ARTIFICIAL (IA)
+   5. SEÇÃO: DIAGNÓSTICO / IA INTERATIVO
    ======================================================= */
 .secao-ia {
     position: relative;
-    padding: 100px 5%;
+    padding: 80px 5%;
     color: var(--verde);
     text-align: center;
     border-radius: 30px;
     background-color: transparent;
+    z-index: 1;
 }
 
 .container-ia {
     position: relative;
-    max-width: 950px;
+    max-width: 850px;
     margin: 0 auto;
     z-index: 2;
 }
 
 .cabecalho-ia {
-    background-color: #efe2d2;
+    background-color: var(--bege);
     border-radius: 20px;
     color: var(--verde);
-    padding: 10px 10px;
+    padding: 20px;
     margin-bottom: 30px;
     border: 2px solid rgba(236, 90, 65, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15), 0 0 20px rgba(236, 90, 65, 0.1);
-    position: relative;
-    transition: all 0.4s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
 }
 
 .cabecalho-ia:hover {
     transform: translateY(-3px);
-    border-color: #ec5a41;
+    border-color: var(--terracota);
     box-shadow: 0 30px 35px rgba(0, 0, 0, 0.2), 0 0 25px rgba(236, 90, 65, 0.3);
 }
 
@@ -331,76 +293,309 @@ body {
 }
 
 .destaque-ia {
-    color: #ec5a41;
+    color: var(--terracota);
 }
 
 .cabecalho-ia p {
     padding: 10px;
     font-size: 20px;
     line-height: 1.6;
-    margin: 0px 20px 30px 20px;
+    margin: 0 20px 30px 20px;
     opacity: 0.9;
     font-weight: bold;
 }
 
 .card-interativo-ia {
-    background-color: #efe2d2;
-    border-radius: 20px;
-    padding: 40px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    background-color: var(--bege);
+    border-radius: 25px;
+    padding: 45px 40px;
     text-align: left;
-    color: #3e815f;
+    color: var(--verde);
+    border: 2px solid rgba(236, 90, 65, 0.25);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.card-interativo-ia:hover {
+    transform: translateY(-8px);
+    border-color: var(--terracota);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), 0 0 35px rgba(236, 90, 65, 0.3);
+}
+
+/* Controle de Etapas */
+.etapa-teste {
+    display: none;
+}
+
+.etapa-teste.active {
+    display: block !important;
 }
 
 .progresso {
-    padding: 7px;
+    display: inline-block;
+    padding: 8px 18px;
     background: #ffffff;
-    font-weight: bold;
-    color: #ec5a41;
+    font-weight: 800;
+    color: var(--terracota);
     text-transform: uppercase;
     font-size: 13px;
+    letter-spacing: 1px;
     border-radius: 50px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border: 2px solid rgba(236, 90, 65, 0.2);
+    margin-bottom: 10px;
 }
 
-.pergunta-corpo h3 {
-    font-size: 24px;
-    font-weight: 800;
-    margin: 15px 0 30px 0;
-    line-height: 1.3;
+.grupo-campo {
+    margin-bottom: 20px;
+}
+
+.grupo-campo label {
+    display: block;
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: var(--verde);
+}
+
+/* Formulários e Inputs do Teste (Otimizados) */
+.input-diagnostico,
+.card-interativo-ia input,
+.card-interativo-ia select {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border: 2px solid rgba(62, 129, 95, 0.2);
+    border-radius: 12px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+    color: #222222;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.input-diagnostico:focus,
+.card-interativo-ia input:focus,
+.card-interativo-ia select:focus {
+    border-color: var(--terracota);
+    box-shadow: 0 0 0 4px rgba(236, 90, 65, 0.15), 0 4px 12px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
 }
 
 .opcoes-respostas {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    margin-top: 20px;
 }
 
 .btn-opcao {
-    background-color: transparent;
-    border: 2px solid #3e815f;
-    padding: 15px 20px;
-    border-radius: 10px;
-    color: #3e815f;
+    background-color: #ffffff;
+    border: 2px solid rgba(62, 129, 95, 0.3);
+    padding: 18px 24px;
+    border-radius: 14px;
+    color: var(--verde);
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     text-align: left;
     cursor: pointer;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
 }
 
-.btn-opcao:hover {
-    background-color: #3e815f;
-    color: #efe2d2;
-    transform: translateX(10px);
-    box-shadow: 5px 5px 15px #ec5a41;
+.btn-opcao:hover,
+.btn-opcao.selecionado {
+    background-color: var(--verde);
+    color: var(--bege);
+    border-color: var(--verde);
+    transform: translateX(8px);
+    box-shadow: 0 8px 20px rgba(62, 129, 95, 0.3);
+}
+
+.btn-proximo {
+    display: block;
+    width: auto;
+    margin: 25px auto 0 auto;
+    padding: 14px 35px;
+    background: linear-gradient(135deg, #ec5a41, #d44b34);
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(236, 90, 65, 0.35);
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-proximo:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 25px rgba(236, 90, 65, 0.5);
+    background: linear-gradient(135deg, #f06a53, #ec5a41);
+}
+
+/* Classes de Resultado */
+.resultado-box {
+    text-align: center;
+}
+
+.icone-resultado {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.card-plano-recomendado {
+    background: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px 0;
+    border-left: 5px solid var(--terracota);
+}
+
+.nome-plano {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--terracota);
+    margin: 10px 0;
+}
+
+.btn-enviar-final {
+    width: 100%;
+    padding: 18px;
+    background-color: #25D366;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 /* =======================================================
-   SEÇÃO: CARDS VANTAGENS
+   6. SEÇÃO: GRAVADOR DE ÁUDIO E ONDA SONORA
+   ======================================================= */
+.container-audio-recorder {
+    background-color: #ffffff;
+    border: 2px solid rgba(62, 129, 95, 0.2);
+    border-radius: 16px;
+    padding: 20px;
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.audio-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.btn-microfone {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--verde);
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-microfone:hover {
+    transform: scale(1.05);
+    background-color: var(--terracota);
+}
+
+.btn-microfone.gravando {
+    background-color: #e74c3c;
+    animation: pulsarMic 1.2s infinite;
+}
+
+.btn-microfone.concluido {
+    background-color: #27ae60;
+}
+
+.status-gravacao {
+    display: flex;
+    flex-direction: column;
+}
+
+#label-status {
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--verde);
+}
+
+.timer {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px;
+}
+
+/* Animação das Barras de Áudio (Onda Sonora) */
+.visualizador-onda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    height: 30px;
+    width: 100%;
+}
+
+.visualizador-onda span {
+    width: 6px;
+    height: 8px;
+    background-color: var(--verde);
+    border-radius: 3px;
+    opacity: 0.3;
+    transition: all 0.3s ease;
+}
+
+.visualizador-onda.animando span {
+    opacity: 1;
+    background-color: var(--terracota);
+    animation: ondaAnimada 1s infinite alternate ease-in-out;
+}
+
+.visualizador-onda.animando span:nth-child(1) { animation-delay: 0.1s; }
+.visualizador-onda.animando span:nth-child(2) { animation-delay: 0.3s; }
+.visualizador-onda.animando span:nth-child(3) { animation-delay: 0.2s; }
+.visualizador-onda.animando span:nth-child(4) { animation-delay: 0.4s; }
+.visualizador-onda.animando span:nth-child(5) { animation-delay: 0.1s; }
+.visualizador-onda.animando span:nth-child(6) { animation-delay: 0.3s; }
+
+@keyframes ondaAnimada {
+    0% { height: 8px; }
+    100% { height: 28px; }
+}
+
+@keyframes pulsarMic {
+    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+/* =======================================================
+   7. SEÇÃO: POR QUE ESTUDAR COM A RAQUEL (CARDS)
    ======================================================= */
 .secao-cards {
     padding: 60px 5%;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .titulo-cards {
@@ -419,7 +614,7 @@ body {
 }
 
 .card-item {
-    background-color: #efe2d2;
+    background-color: var(--bege);
     color: var(--verde);
     flex: 1;
     min-width: 280px;
@@ -428,14 +623,28 @@ body {
     border-radius: 20px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     border: 2px solid rgba(236, 90, 65, 0.1);
-    transition: all 0.3s ease;
     text-align: left;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        box-shadow 0.3s ease;
 }
 
-.card-item:hover {
-    transform: translateY(-10px);
-    border-color: #ec5a41;
-    box-shadow: 0 15px 30px rgba(236, 90, 65, 0.25);
+.card-item.revelado {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.container-cards .card-item:nth-child(2) { transition-delay: 0.15s; }
+.container-cards .card-item:nth-child(3) { transition-delay: 0.3s; }
+
+.card-item.revelado:hover {
+    transform: translateY(-8px) !important;
+    border-color: var(--terracota);
+    box-shadow: 0 20px 35px rgba(236, 90, 65, 0.25);
 }
 
 .icone-card {
@@ -458,12 +667,14 @@ body {
 }
 
 /* =======================================================
-   SEÇÃO: DEPOIMENTOS / FEEDBACK
+   8. SEÇÃO: DEPOIMENTOS / FEEDBACK
    ======================================================= */
 .secao-feedback {
     padding: 60px 5%;
     background-color: rgba(239, 226, 210, 0.05);
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
 .secao-feedback h2 {
@@ -500,6 +711,26 @@ body {
     text-align: left;
     position: relative;
     border-bottom: 4px solid var(--terracota);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+        box-shadow 0.3s ease;
+}
+
+.card-feedback.revelado {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.container-feedback .card-feedback:nth-child(2) { transition-delay: 0.15s; }
+.container-feedback .card-feedback:nth-child(3) { transition-delay: 0.3s; }
+
+.card-feedback.revelado:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 0 20px 35px rgba(236, 90, 65, 0.25);
 }
 
 .topo-feedback {
@@ -557,7 +788,7 @@ body {
 }
 
 /* =======================================================
-   RODAPÉ / FOOTER
+   9. RODAPÉ / FOOTER
    ======================================================= */
 .rodape {
     background-color: var(--bege);
@@ -565,6 +796,8 @@ body {
     padding: 60px 5% 20px 5%;
     margin-top: 80px;
     border-radius: 30px 30px 0 0;
+    position: relative;
+    z-index: 1;
 }
 
 .container-rodape {
@@ -664,129 +897,104 @@ body {
 }
 
 /* =======================================================
-   BOTÃO FLUTUANTE NOTION WITH PULSE ANIMS
+   10. BOTÃO FLUTUANTE
    ======================================================= */
 .btn-flutuante-notion {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: 25px;
+    right: 25px;
     z-index: 10000;
     background-color: var(--terracota);
     color: #ffffff;
-    padding: 15px 25px;
+    padding: 10px 18px;
     border-radius: 50px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     text-decoration: none;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     animation: pulsar 2s infinite;
     transition: all 0.3s ease;
 }
 
 .btn-flutuante-notion:hover {
     background-color: #d44b34;
-    transform: scale(1.08);
-    box-shadow: 0 12px 30px rgba(236, 90, 65, 0.5);
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(236, 90, 65, 0.5);
     animation: none;
 }
 
 .icone-agenda {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 @keyframes pulsar {
     0% {
         transform: scale(1);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
     50% {
-        transform: scale(1.04);
-        box-shadow: 0 8px 30px rgba(236, 90, 65, 0.6);
+        transform: scale(1.03);
+        box-shadow: 0 6px 25px rgba(236, 90, 65, 0.5);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
 }
-/* =======================================================
-   MÁGICA DE VISIBILIDADE (COMPUTADOR VS CELULAR)
-   ======================================================= */
-
-/* 1. CONFIGURAÇÃO PADRÃO (Para telas grandes de Computador) */
-.arte-desktop {
-    display: block !important; /* Força aparecer no PC */
-}
-
-.arte-mobile {
-    display: none !important;  /* Força sumir no PC */
-}
 
 /* =======================================================
-   --- REGRAS UNIFICADAS APENAS PARA O CELULAR (MAX-WIDTH: 768px) ---
+   11. REGRAS RESPONSIVAS PARA CELULAR (MAX-WIDTH: 768px)
    ======================================================= */
 @media (max-width: 768px) {
-    
-    /* CORREÇÃO DO BUG: Força o esconde-esconde a funcionar no celular */
+
     .arte-desktop {
-        display: none !important; /* Some no celular */
+        display: none !important;
     }
 
     .arte-mobile {
-        display: block !important; /* Aparece no celular */
+        display: block !important;
     }
-      .secao-apresentacao {
-        padding-left: 0 !important;  /* Remove o espaço da esquerda da seção */
-        padding-right: 0 !important; /* Remove o espaço da direita da seção */
-        padding-top: 10px !important; /* Ajuste para o celular: menor que no PC para colar na barra */
+
+    .secao-apresentacao {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 80px !important;
     }
 
     .container-apresentacao {
-        width: 100% !important;     /* Força o container a ocupar a tela inteira (100%) */
-        margin: 0 !important;        /* Zera qualquer margem restante */
+        width: 100% !important;
+        margin: 0 !important;
     }
 
     .container-apresentacao img {
-        border-radius: 30px !important; /* Remove o arredondado para a foto colar nas bordas da tela */
+        border-radius: 20px !important;
     }
 
-    html, body {
-        width: 100% !important;
-        overflow-x: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    /* Transformação Flexbox: Colunas no Celular */
     .container-cards,
     .container-feedback,
-    .container-rodape,
-    .hero {
+    .container-rodape {
         flex-direction: column !important;
         align-items: center !important;
         text-align: center !important;
         gap: 30px !important;
-        padding: 30px 20px !important;
+        padding: 20px 10px !important;
     }
 
-    /* Centralização e Respiro Geral das Seções */
     section,
-    .hero,
-    .secao-sobre,
+    .secao-cards,
     .secao-feedback,
     .rodape {
         width: 100% !important;
         max-width: 100% !important;
         margin-left: 0 !important;
         margin-right: 0 !important;
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        box-sizing: border-box !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
     }
 
-    /* Ajuste Exclusivo da Nav-Bar no Celular */
     .nav-bar {
         position: fixed !important;
         flex-direction: row !important;
@@ -794,192 +1002,82 @@ body {
         align-items: center !important;
         padding: 10px 20px !important;
         left: 0 !important;
-        right: 0 !important;
-        transform: none !important;
+        top: 0 !important;
         width: 100% !important;
-        margin: 0 !important;
-        box-sizing: border-box;
-        font-size: 16px !important;
-        white-space: nowrap !important;
-        font-weight: 800;
-        border-radius:10px !important;
-        z-index: 99999 !important; /* Garante que o menu do celular fique na frente de tudo */
+        border-radius: 0 !important;
     }
 
     .logo {
-        font-size: 30px !important;
+        font-size: 24px !important;
         margin-left: 0 !important;
     }
 
     .menu-hamburguer {
-        display: flex !important; 
-        padding: 5px !important;
-        margin-top: 0 !important;
+        display: flex !important;
     }
 
-    /* Como a lista de links deve se comportar no celular: */
     .menu {
-        display: none; 
+        display: none;
         flex-direction: column;
-        position: absolute; 
-        top: 100%; 
+        position: absolute;
+        top: 100%;
         left: 0;
         width: 100%;
-        background-color: #efe2d2; 
+        background-color: var(--bege);
         text-align: center;
         padding: 20px 0;
-        gap: 20px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
+        gap: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     }
 
-    /* QUANDO O JAVASCRIPT ATIVAR O MENU */
     .menu.ativo {
         display: flex !important;
     }
 
     .meu-link {
-        font-size: 20px !important;
+        font-size: 18px !important;
         margin: 0 !important;
-        padding: 10px 0;
+        padding: 8px 0;
         display: block;
         width: 100%;
     }
-     
-    /* Ajustes da Seção Sobre e Pilares */
-    .hero {
-        margin-top: 80px !important;
-    }
 
-    .hero-content {
-        font-size: 20px !important;
-        text-align: center !important;
-    }
-
-    .hero-content p {
-        margin: 20px 0 !important;
-        line-height: 1.4 !important;
-    }
-
-    .hero-image img {
-        margin-left: 0 !important;
-        width: 280px !important;
-        height: 280px !important;
-    }
-
-    .hero-content,
-    .sobre-texto-principal,
-    .container-ia {
-        width: 100% !important;
-        margin: 0 auto !important;
-        text-align: center !important;
-    }
-
-    .pilares-raquel {
-        display: flex !important;
-        flex-direction: column !important;
-        gap: 20px !important;
-        width: 100% !important;
-        padding: 0 !important;
-        margin: 30px 0 !important;
-    }
-
-    /* Correção Fina da Seção do Vídeo */
     .secao-video {
         width: 100% !important;
-        max-width: 100% !important;
-        margin: 40px 0 !important;
-        padding: 0 20px !important;
-        box-sizing: border-box !important;
-        text-align: center !important;
+        margin: 20px 0 !important;
+        padding: 20px 15px !important;
     }
 
     .container-flex-video {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 0 auto !important;
-        padding: 0 !important;
-        display: flex !important;
         flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        font-size: 18px !important;
+        gap: 20px !important;
     }
 
-    .coluna-texto,
-    .secao-video h2,
-    .secao-video p {
-        width: 100% !important;
-        max-width: 100% !important;
-        text-align: center !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        padding: 0 !important;
-    }
-
-    .player-video {
-        width: 100% !important;
-        max-width: 100% !important;
-        margin: 20px auto 0 auto !important;
-        clear: both !important;
-        display: block !important;
-    }
-
-    .player-video iframe {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: block !important;
-        left: 0 !important;
-        height: 220px !important;
-        position: relative !important;
-        margin: 0 auto !important;
-    }
-
-    /* Correção do Tamanho do Botão de Nível */
-    .btn-nivel,
-    .botao-espanhol,
-    .secao-video .btn,
     .btn-cta-2 {
-        display: inline-block !important;
-        width: auto !important;
-        max-width: 280px !important;
+        width: 100% !important;
+        max-width: 100% !important;
         font-size: 15px !important;
-        padding: 12px 24px !important;
-        margin: 20px auto !important;
-        text-align: center !important;
+        padding: 12px 20px !important;
     }
 
-    /* Ajustes das Caixas de IA e Interativas */
     .cabecalho-ia h2 {
         font-size: 24px !important;
     }
 
     .cabecalho-ia p {
         font-size: 16px !important;
-        margin: 0px 10px 20px 10px !important;
+        margin: 0 0 15px 0 !important;
     }
 
     .card-interativo-ia {
         padding: 20px !important;
     }
 
-    .card-item,
-    .card-feedback {
-        max-width: 100% !important;
-        width: 100% !important;
-        box-sizing: border-box;
-    }
-
-    /* Redução do Botão Flutuante do Notion no Celular */
     .btn-flutuante-notion {
-        bottom: 20px !important;
-        right: 20px !important;
-        padding: 10px 18px !important;
-        font-size: 14px !important;
-    }
-
-    .icone-agenda {
-        font-size: 16px !important;
+        bottom: 15px !important;
+        right: 15px !important;
+        padding: 8px 14px !important;
+        font-size: 12px !important;
     }
 }
 /* Se tiver a imagem das marcas d'água, descomente a linha abaixo */
