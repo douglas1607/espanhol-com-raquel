@@ -570,22 +570,52 @@ body::before {
     animation: ondaAnimada 1s infinite alternate ease-in-out;
 }
 
-.visualizador-onda.animando span:nth-child(1) { animation-delay: 0.1s; }
-.visualizador-onda.animando span:nth-child(2) { animation-delay: 0.3s; }
-.visualizador-onda.animando span:nth-child(3) { animation-delay: 0.2s; }
-.visualizador-onda.animando span:nth-child(4) { animation-delay: 0.4s; }
-.visualizador-onda.animando span:nth-child(5) { animation-delay: 0.1s; }
-.visualizador-onda.animando span:nth-child(6) { animation-delay: 0.3s; }
+.visualizador-onda.animando span:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.visualizador-onda.animando span:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.visualizador-onda.animando span:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.visualizador-onda.animando span:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.visualizador-onda.animando span:nth-child(5) {
+    animation-delay: 0.1s;
+}
+
+.visualizador-onda.animando span:nth-child(6) {
+    animation-delay: 0.3s;
+}
 
 @keyframes ondaAnimada {
-    0% { height: 8px; }
-    100% { height: 28px; }
+    0% {
+        height: 8px;
+    }
+
+    100% {
+        height: 28px;
+    }
 }
 
 @keyframes pulsarMic {
-    0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-    70% { box-shadow: 0 0 0 15px rgba(231, 76, 60, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 15px rgba(231, 76, 60, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0);
+    }
 }
 
 /* =======================================================
@@ -638,8 +668,13 @@ body::before {
     transform: translateY(0);
 }
 
-.container-cards .card-item:nth-child(2) { transition-delay: 0.15s; }
-.container-cards .card-item:nth-child(3) { transition-delay: 0.3s; }
+.container-cards .card-item:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.container-cards .card-item:nth-child(3) {
+    transition-delay: 0.3s;
+}
 
 .card-item.revelado:hover {
     transform: translateY(-8px) !important;
@@ -725,8 +760,13 @@ body::before {
     transform: translateY(0);
 }
 
-.container-feedback .card-feedback:nth-child(2) { transition-delay: 0.15s; }
-.container-feedback .card-feedback:nth-child(3) { transition-delay: 0.3s; }
+.container-feedback .card-feedback:nth-child(2) {
+    transition-delay: 0.15s;
+}
+
+.container-feedback .card-feedback:nth-child(3) {
+    transition-delay: 0.3s;
+}
 
 .card-feedback.revelado:hover {
     transform: translateY(-8px) !important;
@@ -935,10 +975,12 @@ body::before {
         transform: scale(1);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
     }
+
     50% {
         transform: scale(1.03);
         box-shadow: 0 6px 25px rgba(236, 90, 65, 0.5);
     }
+
     100% {
         transform: scale(1);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
@@ -961,7 +1003,7 @@ body::before {
     .secao-apresentacao {
         padding-left: 0 !important;
         padding-right: 0 !important;
-        padding-top: 80px !important;
+        padding-top: 0 !important;
     }
 
     .container-apresentacao {
@@ -1080,6 +1122,7 @@ body::before {
         font-size: 12px !important;
     }
 }
+
 /* Se tiver a imagem das marcas d'água, descomente a linha abaixo */
 /* background-image: url('fundo-raquel.png'); background-repeat: repeat; background-attachment: fixed; */
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
