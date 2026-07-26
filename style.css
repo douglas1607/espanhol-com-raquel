@@ -134,12 +134,25 @@ body::before {
     transition: 0.3s ease;
 }
 
+/* Animação simples do ícone hambúrguer quando ativo */
+.menu-hamburguer.ativo span:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+
+.menu-hamburguer.ativo span:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-hamburguer.ativo span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
 /* =======================================================
    3. SEÇÃO: SOBRE MIM / APRESENTAÇÃO
    ======================================================= */
 .secao-apresentacao {
     background-color: transparent;
-    padding-top: 0px;
+    padding-top: 10px; /* Evita que a barra de navegação cubra o topo */
     padding-bottom: 0;
     margin: 0 20px;
 }
@@ -943,7 +956,7 @@ body::before {
     position: fixed;
     bottom: 25px;
     right: 25px;
-    z-index: 10000;
+    z-index: 999; /* Fica abaixo apenas da navbar/menu aberto */
     background-color: var(--terracota);
     color: #ffffff;
     padding: 10px 18px;
@@ -1047,10 +1060,11 @@ body::before {
         top: 0 !important;
         width: 100% !important;
         border-radius: 0 !important;
+        z-index: 10000;
     }
 
     .logo {
-        font-size: 24px !important;
+        font-size: 20px !important;
         margin-left: 0 !important;
     }
 
@@ -1058,8 +1072,9 @@ body::before {
         display: flex !important;
     }
 
+    /* Ajuste de transição e sobreposição do menu dropdown mobile */
     .menu {
-        display: none;
+        display: flex;
         flex-direction: column;
         position: absolute;
         top: 100%;
@@ -1067,19 +1082,26 @@ body::before {
         width: 100%;
         background-color: var(--bege);
         text-align: center;
-        padding: 20px 0;
-        gap: 15px;
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.4s ease-in-out;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
     }
 
     .menu.ativo {
-        display: flex !important;
+        padding: 20px 0;
+        max-height: 300px;
+        opacity: 1;
     }
 
     .meu-link {
         font-size: 18px !important;
         margin: 0 !important;
-        padding: 8px 0;
+        padding: 10px 0;
         display: block;
         width: 100%;
     }
@@ -1122,7 +1144,6 @@ body::before {
         font-size: 12px !important;
     }
 }
-
 /* Se tiver a imagem das marcas d'água, descomente a linha abaixo */
 /* background-image: url('fundo-raquel.png'); background-repeat: repeat; background-attachment: fixed; */
 /*@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
