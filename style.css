@@ -182,7 +182,7 @@ body::before {
    4. SEÇÃO: CLASSE DE VÍDEO
    ======================================================= */
 .secao-video {
-    padding: 40px 20px;
+    padding: 10px;
     background-color: rgba(239, 226, 210, 1.0);
     margin: 20px 20px 30px 20px;
     border-radius: 30px;
@@ -206,30 +206,67 @@ body::before {
 
 .container-flex-video {
     display: flex;
-    gap: 50px;
+   gap: 20px;
     max-width: 1200px;
     font-size: 22px;
     align-items: center;
     margin: 0 auto;
+    width: 100%;
+}
+.coluna-texto,
+.coluna-video {
+    flex: 1;
+    width: 50%;
 }
 
 .coluna-texto {
-    flex: 1;
     color: var(--verde);
+    line-height: 1.6;
+    padding: 0;
+    margin: 0;
+    
 }
+.lista-aprendizado {
+    padding: 0;
+    margin-left: 10px;
+    font-weight: 500;
+    width: 100%;
+}
+.lista-aprendizado li {
+    
+    display: flex;  
+    align-items: center;
+    width: 100%;
+    white-space: normal;
+}
+.coluna-video {
+    width: 100%;}
+
 
 .player-video {
-    background: var(--verde);
     position: relative;
-    border-radius: 30px;
-    border: 8px solid var(--verde);
-    overflow: hidden;
-}
-
-.player-video video {
+    width: 100%;
+    /* Mantém a proporção de cinema/YouTube (16:9) */
+    aspect-ratio: 16 / 9; 
+    background: var(--verde);
     border-radius: 20px;
+    border: 4px solid var(--verde);
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
+.player-video iframe {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0;
+    object-fit: cover; /* Garante o preenchimento sem sobram margens */
+    z-index: 10;
+    pointer-events: auto; /* Permite interação com o vídeo */
+}
 .container-botao {
     text-align: center;
     width: 100%;
