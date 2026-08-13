@@ -329,3 +329,33 @@ document.addEventListener("DOMContentLoaded", function () {
         window.open(urlFinal, '_blank');
     };
 });
+
+// LÓGICA DE ABRIR E FECHAR A PÁGINA OCULTA / MODAL SOBRE MÍ
+
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("modal-sobre");
+    const btnFechar = document.getElementById("fechar-modal");
+    
+    // Pega todos os links com href="#sobre-raquel" (no menu e no rodapé)
+    const linksSobre = document.querySelectorAll('a[href="#sobre-raquel"]');
+
+    // Ao clicar em "Sobre Mí", abre o modal em vez de rolar a página
+    linksSobre.forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault(); // Impede o comportamento padrão de rolagem
+            modal.classList.add("ativo");
+        });
+    });
+
+    // Fecha ao clicar no botão X
+    btnFechar.addEventListener("click", function () {
+        modal.classList.remove("ativo");
+    });
+
+    // Fecha ao clicar fora da caixa do modal (no fundo escuro)
+    modal.addEventListener("click", function (e) {
+        if (e.target === modal) {
+            modal.classList.remove("ativo");
+        }
+    });
+});
