@@ -1253,6 +1253,11 @@ body::before {
         align-items: center !important;
         margin: 0 20px 0 20px !important;
     }
+    .coluna-texto {
+        width: 100% !important;
+        margin-bottom: 20px !important;
+        text-align: center !important;
+    }
 
     .lista-aprendizado {
         font-size: 18px !important;
