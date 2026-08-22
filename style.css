@@ -240,7 +240,6 @@ body::before {
 .lista-aprendizado li {
     margin-bottom: 20px;
     display: flex;
-    align-items: center;
     width: 100%;
     white-space: normal;
 }
@@ -1260,9 +1259,15 @@ body::before {
 
     .lista-aprendizado {
         font-size: 18px !important;
-        margin-bottom: 20px !important;
         width: 100% !important;
         height: 100% !important;
+        text-align: center !important;
+    }
+    .lista-aprendizado li {
+        margin-bottom: 20px !important;
+        display: flex !important;
+        width: 100% !important;
+        white-space: normal !important;
     }
 
     .container-flex-video {
