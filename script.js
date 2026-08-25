@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         linksMenu.forEach(link => {
             link.addEventListener("click", () => {
                 menu.classList.remove("ativo");
-                btnHamburguer.classList.remove("ativo");
+                if (btnHamburguer) btnHamburguer.classList.remove("ativo");
             });
         });
     }
@@ -60,35 +60,159 @@ document.addEventListener("DOMContentLoaded", function () {
     // 3. LÓGICA DO DIAGNÓSTICO INTERATIVO (IA)
     // =======================================================
 
-    // Banco de Perguntas (10 Questões: 6 Marcar, 3 Digitar, 1 Áudio)
+    // Banco de Perguntas (20 Questões: 18 Múltipla Escolha, 1 Tradução/Digitar, 1 Áudio)
     const bancoPerguntas = [
-        // MARCAR (A1/A2)
-        { tipo: 'multipla', pontos: 1, pergunta: "1. ¿Cómo se dice 'Bom dia' en español?", opcoes: ["Buenas noches", "Hola", "Buenos días", "Adiós"], resposta: "Buenos días" },
-        { tipo: 'multipla', pontos: 1, pergunta: "2. Completa la frase: 'Yo ___ brasileño.'", opcoes: ["es", "soy", "eres", "somos"], resposta: "soy" },
+        // 1–5 | Básico (1 ponto cada)
+        { 
+            tipo: 'multipla', 
+            pontos: 1, 
+            pergunta: "1. Complete: Yo ___ brasileña.", 
+            opcoes: ["a) soy", "b) estoy", "c) tengo", "d) es"], 
+            resposta: "a) soy" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 1, 
+            pergunta: "2. ¿Cuál frase está correcta?", 
+            opcoes: ["a) Me gusta mucho viajar.", "b) Me gusto mucho viajar.", "c) Yo gusta mucho viajar.", "d) Me gustan mucho viajar."], 
+            resposta: "a) Me gusta mucho viajar." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 1, 
+            pergunta: "3. ¿Qué significa “Tengo hambre”?", 
+            opcoes: ["a) Estou cansado.", "b) Estou com fome.", "c) Estou com frio.", "d) Estou com medo."], 
+            resposta: "b) Estou com fome." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 1, 
+            pergunta: "4. Complete: Ayer ___ al supermercado.", 
+            opcoes: ["a) voy", "b) fui", "c) iba", "d) iré"], 
+            resposta: "b) fui" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 1, 
+            pergunta: "5. ¿Cuál opción completa correctamente?<br><em>Mañana ___ a estudiar para el examen.</em>", 
+            opcoes: ["a) voy", "b) fui", "c) voy a", "d) estaba"], 
+            resposta: "c) voy a" 
+        },
 
-        // MARCAR (B1)
-        { tipo: 'multipla', pontos: 2, pergunta: "3. ¿Cuál é a opção correta para: 'Se eu ___ tempo, iria com você.'?", opcoes: ["tengo", "tuve", "tuviera", "tendré"], resposta: "tuviera" },
+        // 6–10 | Básico / Intermediário (2 pontos cada)
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "6. Complete: Cuando era niña, ___ mucho con mis amigos.", 
+            opcoes: ["a) jugué", "b) jugaba", "c) jugaré", "d) he jugado"], 
+            resposta: "b) jugaba" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "7. ¿Cuál frase significa “Eu já terminei o trabalho”?", 
+            opcoes: ["a) Ya terminé el trabajo.", "b) Ya terminaba el trabajo.", "c) Ya terminaré el trabajo.", "d) Ya terminaría el trabajo."], 
+            resposta: "a) Ya terminé el trabajo." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "8. Escolha a opção correta: No conozco a María. ¿Tú ___ conoces?", 
+            opcoes: ["a) le", "b) la", "c) lo", "d) se"], 
+            resposta: "b) la" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "9. ¿Cuál frase está más natural?", 
+            opcoes: ["a) Hace dos años que estudio español.", "b) Tengo dos años estudiando español.", "c) Hago dos años que estudio español.", "d) Estoy dos años estudiar español."], 
+            resposta: "a) Hace dos años que estudio español." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "10. Complete: Si tuviera más tiempo, ___ más español.", 
+            opcoes: ["a) estudio", "b) estudié", "c) estudiaría", "d) estudiaré"], 
+            resposta: "c) estudiaría" 
+        },
 
-        // DIGITAR (A1/A2)
-        { tipo: 'digitar', pontos: 1, pergunta: "4. Escreva em espanhol: 'Eu tenho 25 anos.' (Dica: Yo tenho...)", respostaEsperada: ["tengo", "tengo veinticinco", "yo tengo 25"] },
+        // 11–18 | Intermediário / Avançado (2 pontos cada)
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "11. Leia e responda:<br><br><em>“Aunque estaba cansada, decidió continuar trabajando porque tenía que terminar el proyecto antes del viernes.”</em><br><br>¿Por qué decidió continuar trabajando?", 
+            opcoes: ["a) Porque quería descansar.", "b) Porque tenía que terminar un proyecto.", "c) Porque no tenía trabajo.", "d) Porque era viernes."], 
+            resposta: "b) Porque tenía que terminar un proyecto." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "12. Complete: Cuando llegué a la estación, el tren ya ___.", 
+            opcoes: ["a) salió", "b) salía", "c) había salido", "d) ha salido"], 
+            resposta: "c) había salido" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "13. ¿Cuál opción expresa correctamente esta idea?<br><em>“Se eu soubesse disso antes, teria feito diferente.”</em>", 
+            opcoes: ["a) Si lo sabía antes, lo habría hecho diferente.", "b) Si lo hubiera sabido antes, lo habría hecho diferente.", "c) Si lo sabría antes, lo hubiera hecho diferente.", "d) Si lo hubiera sabido antes, lo haría diferente."], 
+            resposta: "b) Si lo hubiera sabido antes, lo habría hecho diferente." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "14. Escolha a alternativa mais adequada: No creo que él ___ razón.", 
+            opcoes: ["a) tiene", "b) tenga", "c) tendría", "d) tuvo"], 
+            resposta: "b) tenga" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "15. ¿Cuál frase expresa mejor una opinión con cierto grado de duda?", 
+            opcoes: ["a) Sin duda, esta es la mejor opción.", "b) Es posible que esta sea la mejor opción.", "c) Esta es la mejor opción.", "d) Esta será la mejor opción."], 
+            resposta: "b) Es posible que esta sea la mejor opción." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "16. Leia:<br><br><em>“A pesar de que la empresa había anunciado importantes cambios, muchos empleados seguían mostrando cierta resistencia, ya que consideraban que las nuevas medidas podían afectar negativamente sus condiciones laborales.”</em><br><br>¿Por qué algunos empleados se resistían a los cambios?", 
+            opcoes: ["a) Porque no conocían la empresa.", "b) Porque pensaban que las medidas podían perjudicarlos.", "c) Porque querían cambiar de trabajo.", "d) Porque la empresa había cerrado."], 
+            resposta: "b) Porque pensaban que las medidas podían perjudicarlos." 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "17. Complete corretamente: De haber sabido que la situación terminaría así, probablemente no ___ aquella decisión.", 
+            opcoes: ["a) tomaría", "b) habría tomado", "c) había tomado", "d) tomara"], 
+            resposta: "b) habría tomado" 
+        },
+        { 
+            tipo: 'multipla', 
+            pontos: 2, 
+            pergunta: "18. Qual alternativa soa mais natural e sofisticada em espanhol?", 
+            opcoes: ["a) Quiero que me expliques eso otra vez.", "b) Me gustaría que me explicaras eso de nuevo.", "c) Yo quiero que tú explicas eso nuevamente.", "d) Me gustaría que explicas eso otra vez."], 
+            resposta: "b) Me gustaría que me explicaras eso de nuevo." 
+        },
 
-        // MARCAR (B2)
-        { tipo: 'multipla', pontos: 3, pergunta: "5. ¿Qué significa la expresión 'Estar en las nubes'?", opcoes: ["Estar feliz", "Estar distraído/soñando", "Estar enojado", "Estar viajando"], resposta: "Estar distraído/soñando" },
+        // 19 | Tradução (3 pontos)
+        { 
+            tipo: 'digitar', 
+            pontos: 3, 
+            pergunta: "19. 🌎 Tradução:<br>Traduza para o espanhol:<br><em>“Se eu tivesse mais tempo, viajaria para a Espanha e passaria alguns meses conhecendo diferentes cidades.”</em>", 
+            respostaEsperada: [
+                "si tuviera más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
+                "si tuviera mas tiempo, viajaria a españa y pasaria algunos meses conociendo diferentes ciudades",
+                "si tuviese más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
+                "si tuviese mas tiempo, viajaria a españa y pasaria algunos meses conociendo diferentes ciudades"
+            ] 
+        },
 
-        // DIGITAR (B1/B2)
-        { tipo: 'digitar', pontos: 2, pergunta: "6. Conjugue o verbo HABLAR no Pretérito Perfecto Simple (Yo):", respostaEsperada: ["hablé", "yo hablé"] },
-
-        // MARCAR (A2/B1)
-        { tipo: 'multipla', pontos: 1, pergunta: "7. ¿Cuál es el plural de 'El lápiz'?", opcoes: ["Los lápizs", "Los lápizes", "Los lápices", "Los lapis"], resposta: "Los lápices" },
-
-        // DIGITAR (A1/A2)
-        { tipo: 'digitar', pontos: 1, pergunta: "8. Traduza para espanhol: 'A caneta é azul.'", respostaEsperada: ["el bolígrafo es azul", "la pluma es azul"] },
-
-        // MARCAR (B1/B2 - Falso Amigo)
-        { tipo: 'multipla', pontos: 2, pergunta: "9. La palabra 'Prejuicio' significa:", opcoes: ["Prejuízo financeiro", "Opinião preconcebida (Preconceito)", "Julgamento final", "Dano físico"], resposta: "Opinião preconcebida (Preconceito)" },
-
-        // ÁUDIO (Opcional - B1/B2)
-        { tipo: 'audio', pontos: 3, pergunta: "10. (Opcional) Escute e repita a frase: 'Trabajaba mucho para mejorar su fluidez.'" }
+        // 20 | Áudio de Pronúncia (3 pontos)
+        { 
+            tipo: 'audio', 
+            pontos: 3, 
+            pergunta: "20. 🎙️ Avalie sua pronúncia:<br>Leia a frase abaixo em voz alta e grave um áudio:<br><br><em>“Aunque al principio me costaba mucho hablar español, con el tiempo fui ganando confianza y ahora puedo comunicarme con personas de diferentes países sin sentirme tan inseguro.”</em>" 
+        }
     ];
 
     // Variáveis de estado do teste
@@ -172,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (perguntaData.tipo === 'multipla') {
             htmlPergunta += `<div class="opcoes-respostas">`;
             perguntaData.opcoes.forEach(opcao => {
-                htmlPergunta += `<button type="button" class="btn-opcao" onclick="definirRespostaMultipla(this, '${opcao}')">${opcao}</button>`;
+                htmlPergunta += `<button type="button" class="btn-opcao" onclick="definirRespostaMultipla(this, '${opcao.replace(/'/g, "\\'")}')">${opcao}</button>`;
             });
             htmlPergunta += `</div>`;
         } else if (perguntaData.tipo === 'digitar') {
@@ -186,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </button>
                         <div class="status-gravacao">
                             <span id="label-status">Clique para gravar resposta</span>
-                            <span id="timer-audio" class="timer">00:00 / 00:15</span>
+                            <span id="timer-audio" class="timer">00:00 / 00:20</span>
                         </div>
                     </div>
                     <div class="visualizador-onda" id="onda-sonora">
@@ -198,6 +322,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         htmlPergunta += `</div></div>`;
         if (areaPerguntas) areaPerguntas.innerHTML = htmlPergunta;
+
+        // Atualiza texto do botão na última pergunta
+        if (index === bancoPerguntas.length - 1 && btnProximoPrincipal) {
+            btnProximoPrincipal.innerHTML = "Finalizar Diagnóstico 🎯";
+        }
     }
 
     // Seleção de opções em perguntas de múltipla escolha
@@ -220,10 +349,18 @@ document.addEventListener("DOMContentLoaded", function () {
         } else if (perguntaData.tipo === 'digitar') {
             const inputDigitar = document.getElementById(`resposta-digitar-${perguntaActiveIndex}`);
             if (inputDigitar) {
-                const respostaUser = inputDigitar.value.trim().toLowerCase();
-                if (perguntaData.respostaEsperada.includes(respostaUser)) {
+                const respostaUser = inputDigitar.value.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                const acertou = perguntaData.respostaEsperada.some(exp => {
+                    const cleanExp = exp.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "");
+                    return respostaUser === cleanExp;
+                });
+                if (acertou) {
                     pontuacaoTotal += perguntaData.pontos;
                 }
+            }
+        } else if (perguntaData.tipo === 'audio') {
+            if (tempoGravacao > 0) {
+                pontuacaoTotal += perguntaData.pontos;
             }
         }
     }
@@ -250,9 +387,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 intervaloTempo = setInterval(() => {
                     tempoGravacao++;
                     let seg = tempoGravacao < 10 ? `0${tempoGravacao}` : tempoGravacao;
-                    if (timer) timer.innerText = `00:${seg} / 00:15`;
+                    if (timer) timer.innerText = `00:${seg} / 00:20`;
 
-                    if (tempoGravacao >= 15) {
+                    if (tempoGravacao >= 20) {
                         window.toggleGravacao();
                     }
                 }, 1000);
@@ -277,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Cálculo final e exibição dos resultados
+    // Cálculo final e exibição dos resultados (Pontuação máxima = 37)
     function finalizarDiagnostico() {
         irParaEtapa(3);
 
@@ -285,29 +422,29 @@ document.addEventListener("DOMContentLoaded", function () {
         let planoResult = "";
         let descResult = "";
 
-        if (pontuacaoTotal <= 4) {
+        if (pontuacaoTotal <= 8) {
             nivelResult = "Iniciante (A1)";
             planoResult = "Plano Descoberta";
-            descResult = "Ideal para quem nunca teve contato ou sabe apenas palavras isoladas. Vamos construir sua base juntos.";
-        } else if (pontuacaoTotal <= 8) {
+            descResult = "Ideal para quem está no começo ou deseja recomeçar com uma base sólida e sem vícios.";
+        } else if (pontuacaoTotal <= 18) {
             nivelResult = "Básico (A2)";
             planoResult = "Plano Conexão";
-            descResult = "Você entende frases simples, mas trava na fala. O foco será destravar sua conversação.";
-        } else if (pontuacaoTotal <= 12) {
-            nivelResult = "Intermediário (B1)";
+            descResult = "Você já entende estruturas básicas, mas precisa destravar sua fala e ganhar vocabulário.";
+        } else if (pontuacaoTotal <= 28) {
+            nivelResult = "Intermediário (B1/B2)";
             planoResult = "Plano Fluidez";
-            descResult = "Você já se comunica, mas falta vocabulário corporativo e confiança para reuniões.";
+            descResult = "Sua comunicação flui, mas falta refinamento gramatical e segurança para situações profissionais.";
         } else {
             nivelResult = "Avançado (B2/C1)";
-            planoResult = "Plano Master/Executivo";
-            descResult = "Foco em refinamento, espanhol de negócios e eliminação de erros sutis para liderança.";
+            planoResult = "Plano Master / Executivo";
+            descResult = "Excelente domínio! Foco na eliminação de pequenos erros sutis, sofisticação e conversação avançada.";
         }
 
         const elemNivel = document.getElementById('resultado-texto-nivel');
         const elemPlano = document.getElementById('nome-plano');
         const elemDesc = document.getElementById('desc-plano');
 
-        if (elemNivel) elemNivel.innerHTML = `Pontuação: ${pontuacaoTotal} pontos.<br>Seu nível estimado é: <strong>${nivelResult}</strong>`;
+        if (elemNivel) elemNivel.innerHTML = `Pontuação: <strong>${pontuacaoTotal}</strong> de 37 pontos.<br>Seu nível estimado é: <strong>${nivelResult}</strong>`;
         if (elemPlano) elemPlano.innerText = planoResult;
         if (elemDesc) elemDesc.innerText = descResult;
 
@@ -328,34 +465,30 @@ document.addEventListener("DOMContentLoaded", function () {
 
         window.open(urlFinal, '_blank');
     };
-});
 
-// LÓGICA DE ABRIR E FECHAR A PÁGINA OCULTA / MODAL SOBRE MÍ
-
-document.addEventListener("DOMContentLoaded", function () {
+    // =======================================================
+    // 4. LÓGICA DE ABRIR E FECHAR O MODAL SOBRE MÍ
+    // =======================================================
     const modal = document.getElementById("modal-sobre");
     const btnFechar = document.getElementById("fechar-modal");
-    
-    // Pega todos os links com href="#sobre-raquel" (no menu e no rodapé)
     const linksSobre = document.querySelectorAll('a[href="#sobre-raquel"]');
 
-    // Ao clicar em "Sobre Mí", abre o modal em vez de rolar a página
-    linksSobre.forEach(link => {
-        link.addEventListener("click", function (e) {
-            e.preventDefault(); // Impede o comportamento padrão de rolagem
-            modal.classList.add("ativo");
+    if (modal && btnFechar) {
+        linksSobre.forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                modal.classList.add("ativo");
+            });
         });
-    });
 
-    // Fecha ao clicar no botão X
-    btnFechar.addEventListener("click", function () {
-        modal.classList.remove("ativo");
-    });
-
-    // Fecha ao clicar fora da caixa do modal (no fundo escuro)
-    modal.addEventListener("click", function (e) {
-        if (e.target === modal) {
+        btnFechar.addEventListener("click", function () {
             modal.classList.remove("ativo");
-        }
-    });
+        });
+
+        modal.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.classList.remove("ativo");
+            }
+        });
+    }
 });
