@@ -284,6 +284,7 @@ body::before {
 }
 
 .btn-cta-2 {
+    margin-top: 20px;
     padding: 15px 40px;
     background-color: var(--terracota);
     border-radius: 50px;
@@ -889,21 +890,25 @@ body::before {
 /* =======================================================
    9. RODAPÉ / FOOTER
    ======================================================= */
+/* =======================================================
+   9. RODAPÉ / FOOTER (DESIGN MODERNO)
+   ======================================================= */
 .rodape {
     background-color: var(--bege);
     color: var(--verde);
-    padding: 60px 5% 20px 5%;
+    padding: 70px 5% 30px 5%;
     margin-top: 80px;
     border-radius: 30px 30px 0 0;
     position: relative;
     z-index: 1;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.03);
 }
 
 .container-rodape {
     display: flex;
     justify-content: space-between;
-    gap: 40px;
-    max-width: 1200px;
+    gap: 50px;
+    max-width: 1100px;
     margin: 0 auto;
     flex-wrap: wrap;
 }
@@ -913,26 +918,44 @@ body::before {
     min-width: 250px;
 }
 
+/* Coluna 1: Logo e Texto */
 .logo-rodape {
-    font-size: 26px;
-    font-weight: bold;
+    font-size: 24px;
+    font-weight: 800;
     margin-bottom: 15px;
+    letter-spacing: -0.5px;
 }
 
 .sobre-projeto p {
-    font-size: 15px;
-    line-height: 1.6;
-    opacity: 0.9;
+    font-size: 14px;
+    line-height: 1.7;
+    opacity: 0.85;
+    max-width: 320px;
 }
 
+/* Coluna 2 e 3: Títulos */
 .coluna-rodape h3 {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 800;
     margin-top: 0;
     margin-bottom: 20px;
     color: var(--verde);
+    position: relative;
+    display: inline-block;
 }
 
+.coluna-rodape h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 30px;
+    height: 3px;
+    background-color: var(--terracota);
+    border-radius: 2px;
+}
+
+/* Links de Navegação */
 .links-uteis ul {
     list-style: none;
     padding: 0;
@@ -940,61 +963,84 @@ body::before {
 }
 
 .links-uteis ul li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .links-uteis ul li a {
     text-decoration: none;
     color: var(--verde);
-    font-size: 16px;
-    transition: all 0.3s;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-block;
 }
 
 .links-uteis ul li a:hover {
     color: var(--terracota);
-    padding-left: 5px;
+    transform: translateX(6px);
 }
 
-.contato-redes p {
-    margin: 5px 0;
-    font-size: 15px;
-}
-
+/* Botões de Redes e Contato */
 .icones-redes {
     display: flex;
-    gap: 15px;
-    margin-top: 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
 }
 
 .icones-redes a {
     text-decoration: none;
-    background-color: var(--verde);
-    color: var(--bege);
-    padding: 8px 15px;
-    border-radius: 8px;
+    background-color: rgba(62, 129, 95, 0.08); /* Fundo suave usando a cor verde */
+    color: var(--verde);
+    border: 1px solid rgba(62, 129, 95, 0.2);
+    padding: 9px 18px;
+    border-radius: 12px; /* Cantos suavemente arredondados */
     font-size: 14px;
-    font-weight: bold;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: 170px; /* Largura padronizada para ficarem do mesmo tamanho */
     transition: all 0.3s ease;
 }
 
-.icones-redes a:hover {
-    background-color: var(--terracota);
-    transform: translateY(-3px);
+.icones-redes a .icone {
+    font-size: 16px;
 }
 
+.icones-redes a:hover {
+    background-color: var(--verde);
+    color: var(--bege);
+    border-color: var(--verde);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(62, 129, 95, 0.2);
+}
+
+/* Direitos Autorais */
 .direitos-autorais {
     text-align: center;
-    border-top: 1px solid rgba(62, 129, 95, 0.2);
-    margin-top: 40px;
-    padding-top: 20px;
+    border-top: 1px solid rgba(62, 129, 95, 0.15);
+    margin-top: 50px;
+    padding-top: 25px;
 }
 
 .direitos-autorais p {
     margin: 0;
-    font-size: 14px;
-    opacity: 0.9;
+    font-size: 13px;
+    opacity: 0.8;
 }
 
+/* Ajuste Responsivo para Celulares */
+@media (max-width: 768px) {
+    .container-rodape {
+        flex-direction: column;
+        gap: 35px;
+    }
+    
+    .sobre-projeto p {
+        max-width: 100%;
+    }
+}
 /* =======================================================
    10. BOTÃO FLUTUANTE
    ======================================================= */

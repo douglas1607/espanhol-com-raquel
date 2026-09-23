@@ -203,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "si tuviera más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
                 "si tuviera mas tiempo, viajaria a españa y pasaria algunos meses conociendo diferentes ciudades",
                 "si tuviese más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
-                "si tuviese mas tiempo, viajaria a españa y pasaria algunos meses conociendo diferentes ciudades"
+                "si tuviese mas tiempo, viajararia a españa y pasaria algunos meses conociendo diferentes ciudades"
             ] 
         },
 
@@ -469,25 +469,55 @@ document.addEventListener("DOMContentLoaded", function () {
     // =======================================================
     // 4. LÓGICA DE ABRIR E FECHAR O MODAL SOBRE MÍ
     // =======================================================
-    const modal = document.getElementById("modal-sobre");
-    const btnFechar = document.getElementById("fechar-modal");
+    const modalSobre = document.getElementById("modal-sobre");
+    const btnFecharSobre = document.querySelector("#modal-sobre .btn-fechar-modal, #fechar-modal-sobre");
     const linksSobre = document.querySelectorAll('a[href="#sobre-raquel"]');
 
-    if (modal && btnFechar) {
+    if (modalSobre) {
         linksSobre.forEach(link => {
             link.addEventListener("click", function (e) {
                 e.preventDefault();
-                modal.classList.add("ativo");
+                modalSobre.classList.add("ativo");
             });
         });
 
-        btnFechar.addEventListener("click", function () {
-            modal.classList.remove("ativo");
+        if (btnFecharSobre) {
+            btnFecharSobre.addEventListener("click", function () {
+                modalSobre.classList.remove("ativo");
+            });
+        }
+
+        modalSobre.addEventListener("click", function (e) {
+            if (e.target === modalSobre) {
+                modalSobre.classList.remove("ativo");
+            }
+        });
+    }
+
+    // =======================================================
+    // 5. LÓGICA DE ABRIR E FECHAR O MODAL FEEDBACK 
+    // =======================================================
+    const modalFeedback = document.getElementById("modal-feedback");
+    const btnFecharFeedback = document.querySelector("#modal-feedback .btn-fechar-modal, #fechar-modal-feedback");
+    const linksFeedback = document.querySelectorAll('a[href="#modal-feedback"]');
+
+    if (modalFeedback) {
+        linksFeedback.forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault();
+                modalFeedback.classList.add("ativo");
+            });
         });
 
-        modal.addEventListener("click", function (e) {
-            if (e.target === modal) {
-                modal.classList.remove("ativo");
+        if (btnFecharFeedback) {
+            btnFecharFeedback.addEventListener("click", function () {
+                modalFeedback.classList.remove("ativo");
+            });
+        }
+
+        modalFeedback.addEventListener("click", function (e) {
+            if (e.target === modalFeedback) {
+                modalFeedback.classList.remove("ativo");
             }
         });
     }
