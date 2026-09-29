@@ -1407,12 +1407,25 @@ body::before {
         height: 100% !important;
         text-align: center !important;
     }
-    .lista-aprendizado li {
-        margin-bottom: 20px !important;
+        .lista-aprendizado li {
         display: flex !important;
-        width: 100% !important;
-        white-space: normal !important;
+        flex-direction: column !important; /* Força o título em cima e o texto embaixo */
+        align-items: center !important;     /* Centraliza tudo no mobile */
+        text-align: center !important;
+        gap: 6px !important;
+        margin-bottom: 25px !important;
+        background-color: rgba(255, 255, 255, 0.4); /* Fundo suave para destacar cada item */
+        padding: 15px !important;
+        border-radius: 12px !important;
     }
+
+    .lista-aprendizado li span {
+        display: block !important;
+        font-size: 16px !important;
+        white-space: normal !important; /* Permite quebrar linha no celular se o título for longo */
+    }
+
+
 
     .container-flex-video {
         flex-direction: column !important;
