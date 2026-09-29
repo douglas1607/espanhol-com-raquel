@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+
     // =======================================================
     // 1. CONFIGURAÇÃO GERAL E MENU MOBILE
     // =======================================================
@@ -7,7 +8,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const linksMenu = document.querySelectorAll(".meu-link, .menu a");
     const navBar = document.querySelector(".nav-bar");
 
-    // Função para alternar o menu mobile com suporte a toque
     function alternarMenu(event) {
         if (event.type === 'touchstart') event.preventDefault();
         
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
         btnHamburguer.addEventListener("click", alternarMenu);
         btnHamburguer.addEventListener("touchstart", alternarMenu);
 
-        // Fecha o menu ao clicar/tocar em qualquer link de navegação
         linksMenu.forEach(link => {
             link.addEventListener("click", () => {
                 menu.classList.remove("ativo");
@@ -30,7 +29,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Efeito na Nav-bar ao rolar a página
     if (navBar) {
         window.addEventListener("scroll", () => {
             if (window.scrollY > 50) {
@@ -42,17 +40,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =======================================================
-    // 2. EFEITO SCROLL REVEAL (CARDS SOBEM E PARAM AO ROLAR)
+    // 2. EFEITO SCROLL REVEAL (CARDS SOBEM E PERMANECEM VISÍVEIS)
     // =======================================================
-    const observador = new IntersectionObserver((entradas) => {
+    const observador = new IntersectionObserver((entradas, observer) => {
         entradas.forEach(entrada => {
             if (entrada.isIntersecting) {
                 entrada.target.classList.add('revelado');
+                observer.unobserve(entrada.target); // Garante que fica visível permanentemente
             }
         });
-    }, { threshold: 0.15 });
+    }, { 
+        threshold: 0.01,  // Dispara com apenas 1% do card visível
+        rootMargin: "0px 0px -50px 0px" // Dispara um pouco antes de entrar totalmente no campo de visão
+    });
 
-    document.querySelectorAll('.card-item, .card-feedback').forEach(card => {
+    // Seleciona e observa todos os cards das duas seções
+    const cardsParaObservar = document.querySelectorAll('.card-item, .card-feedback');
+    cardsParaObservar.forEach(card => {
         observador.observe(card);
     });
 
@@ -60,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // 3. LÓGICA DO DIAGNÓSTICO INTERATIVO (IA)
     // =======================================================
 
-    // Banco de Perguntas (20 Questões: 18 Múltipla Escolha, 1 Tradução/Digitar, 1 Áudio)
     const bancoPerguntas = [
         // 1–5 | Básico (1 ponto cada)
         { 
@@ -201,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pergunta: "19. 🌎 Tradução:<br>Traduza para o espanhol:<br><em>“Se eu tivesse mais tempo, viajaria para a Espanha e passaria alguns meses conhecendo diferentes cidades.”</em>", 
             respostaEsperada: [
                 "si tuviera más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
-                "si tuviera mas tiempo, viajaria a españa y pasaria algunos meses conociendo diferentes ciudades",
+                "si tuviera mas tiempo, viajararia a españa y pasaria algunos meses conociendo diferentes ciudades",
                 "si tuviese más tiempo, viajaría a españa y pasaría algunos meses conociendo diferentes ciudades",
                 "si tuviese mas tiempo, viajararia a españa y pasaria algunos meses conociendo diferentes ciudades"
             ] 
@@ -215,29 +218,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     ];
 
-    // Variáveis de estado do teste
     let etapaAtual = 1;
     let perguntaActiveIndex = 0;
     let pontuacaoTotal = 0;
     let dadosAluno = {};
     let respostaSelecionada = null;
 
-    // Variáveis do Gravador de Áudio
     let mediaRecorder;
+    let audioChunks = [];
     let gravando = false;
     let tempoGravacao = 0;
     let intervaloTempo;
+    let recognition;
 
-    // Elementos da área do teste
     const btnProximoPrincipal = document.querySelector('#btn-proximo-ia');
     const containerEtapas = document.querySelectorAll('.etapa-teste');
 
-    // Inicializa o botão principal
     if (btnProximoPrincipal) {
         btnProximoPrincipal.addEventListener('click', gerenciarFluxo);
     }
 
-    // Gerencia a troca de etapas do teste
     function gerenciarFluxo() {
         if (etapaAtual === 1) {
             dadosAluno.nome = document.getElementById('aluno-nome')?.value.trim();
@@ -252,7 +252,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } else if (etapaAtual === 2) {
             validarEPontuarPerguntaAtual();
-
             perguntaActiveIndex++;
 
             if (perguntaActiveIndex < bancoPerguntas.length) {
@@ -279,7 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Renderiza a pergunta dinamicamente
     function mostrarPergunta(index) {
         const perguntaData = bancoPerguntas[index];
         const areaPerguntas = document.getElementById('area-perguntas-dinamicas');
@@ -316,6 +314,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div class="visualizador-onda" id="onda-sonora">
                         <span></span><span></span><span></span><span></span><span></span><span></span>
                     </div>
+
+                    <div class="preview-audio-container" style="margin-top: 20px;">
+                        <p style="font-size: 14px; font-weight: bold; margin-bottom: 5px;">Escuche su grabación:</p>
+                        <audio id="player-preview-audio" controls style="width: 100%; border-radius: 8px;"></audio>
+                    </div>
+
+                    <div class="transcricao-live-container" style="margin-top: 15px; padding: 12px; background: rgba(0,0,0,0.03); border-radius: 8px; text-align: left;">
+                        <p style="font-size: 13px; font-weight: bold; margin-bottom: 5px; color: var(--verde, #25d366);">Transcripción en vivo (Español):</p>
+                        <p id="texto-transcricao-espanhol" style="font-size: 14px; font-style: italic; margin: 0; color: #555;">Sua fala aparecerá aqui enquanto você grava...</p>
+                    </div>
                 </div>
             `;
         }
@@ -323,13 +331,11 @@ document.addEventListener("DOMContentLoaded", function () {
         htmlPergunta += `</div></div>`;
         if (areaPerguntas) areaPerguntas.innerHTML = htmlPergunta;
 
-        // Atualiza texto do botão na última pergunta
         if (index === bancoPerguntas.length - 1 && btnProximoPrincipal) {
             btnProximoPrincipal.innerHTML = "Finalizar Diagnóstico 🎯";
         }
     }
 
-    // Seleção de opções em perguntas de múltipla escolha
     window.definirRespostaMultipla = function (botao, opcao) {
         const botoes = botao.parentNode.querySelectorAll('.btn-opcao');
         botoes.forEach(b => b.classList.remove('selecionado'));
@@ -338,7 +344,6 @@ document.addEventListener("DOMContentLoaded", function () {
         respostaSelecionada = opcao;
     };
 
-    // Validação de pontuação
     function validarEPontuarPerguntaAtual() {
         const perguntaData = bancoPerguntas[perguntaActiveIndex];
 
@@ -365,23 +370,57 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Gravação de Áudio
     window.toggleGravacao = async function () {
         const btn = document.getElementById('btn-gravar');
         const label = document.getElementById('label-status');
         const timer = document.getElementById('timer-audio');
         const onda = document.getElementById('onda-sonora');
+        const playerPreview = document.getElementById('player-preview-audio');
+        const textoTranscrito = document.getElementById('texto-transcricao-espanhol');
 
         if (!gravando) {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                 mediaRecorder = new MediaRecorder(stream);
+                audioChunks = [];
+
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+
+                mediaRecorder.onstop = () => {
+                    const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+                    const audioUrl = URL.createObjectURL(audioBlob);
+                    if (playerPreview) playerPreview.src = audioUrl;
+                };
+
+                if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                    recognition = new SpeechRecognition();
+                    recognition.continuous = true;
+                    recognition.interimResults = true;
+                    recognition.lang = 'es-ES';
+
+                    recognition.onresult = (event) => {
+                        let transcript = '';
+                        for (let i = event.resultIndex; i < event.results.length; i++) {
+                            transcript += event.results[i][0].transcript;
+                        }
+                        if (textoTranscrito) textoTranscrito.innerText = transcript;
+                    };
+
+                    recognition.start();
+                } else {
+                    if (textoTranscrito) textoTranscrito.innerText = "Seu navegador não suporta transcrição de áudio em tempo real.";
+                }
+
                 mediaRecorder.start();
 
                 gravando = true;
                 if (btn) btn.classList.add('gravando');
                 if (onda) onda.classList.add('animando');
                 if (label) label.innerText = "Gravando áudio...";
+                if (textoTranscrito) textoTranscrito.innerText = "Escuchando...";
 
                 tempoGravacao = 0;
                 intervaloTempo = setInterval(() => {
@@ -401,6 +440,9 @@ document.addEventListener("DOMContentLoaded", function () {
             if (mediaRecorder && mediaRecorder.state !== "inactive") {
                 mediaRecorder.stop();
             }
+            if (recognition) {
+                recognition.stop();
+            }
             clearInterval(intervaloTempo);
             gravando = false;
 
@@ -414,7 +456,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    // Cálculo final e exibição dos resultados (Pontuação máxima = 37)
     function finalizarDiagnostico() {
         irParaEtapa(3);
 
@@ -436,7 +477,7 @@ document.addEventListener("DOMContentLoaded", function () {
             descResult = "Sua comunicação flui, mas falta refinamento gramatical e segurança para situações profissionais.";
         } else {
             nivelResult = "Avançado (B2/C1)";
-            planoResult = "Plano Master / Executivo";
+            planoResult = "Plano Master / Executivo / Personalizado";
             descResult = "Excelente domínio! Foco na eliminação de pequenos erros sutis, sofisticação e conversação avançada.";
         }
 
@@ -451,54 +492,55 @@ document.addEventListener("DOMContentLoaded", function () {
         dadosAluno.nivelEstimado = nivelResult;
     }
 
-    // Envio para o WhatsApp
     window.enviarDadosWhatsApp = function () {
         const mensagem = `Hola Raquel! Acabo de fazer o diagnóstico dinâmico:\n\n` +
             `*Nome:* ${dadosAluno.nome || 'Não informado'}\n` +
             `*Objetivo:* ${dadosAluno.objetivo || 'Não informado'}\n` +
             `*Nível Estimado:* ${dadosAluno.nivelEstimado || 'A determinar'}\n` +
             `*Pontuação:* ${pontuacaoTotal} pontos.\n\n` +
-            `Gostaria de agendar minha aula experimental!`;
+            `Gostaria de agendar minhas aulas!`;
 
-        const numeroWhats = "5585992826206";
+        const numeroWhats = "5585991772804";
         const urlFinal = `https://api.whatsapp.com/send?phone=${numeroWhats}&text=${encodeURIComponent(mensagem)}`;
 
         window.open(urlFinal, '_blank');
     };
 
     // =======================================================
-    // 4. LÓGICA DE ABRIR E FECHAR O MODAL SOBRE MÍ
+    // 4. MODAL SOBRE MÍ
+    // =======================================================
+    // =======================================================
+    // 4. MODAL SOBRE MÍ (CORRIGIDO)
     // =======================================================
     const modalSobre = document.getElementById("modal-sobre");
-    const btnFecharSobre = document.querySelector("#modal-sobre .btn-fechar-modal, #fechar-modal-sobre");
-    const linksSobre = document.querySelectorAll('a[href="#sobre-raquel"]');
+    const btnFecharSobre = document.querySelector("#modal-sobre .btn-fechar-modal");
+    
+    // Seleciona todos os links que devem abrir o modal "Sobre Mim"
+    const linksSobre = document.querySelectorAll('a[href="#sobre"], a[href="#sobre-raquel"], a[href="#modal-sobre"]');
 
     if (modalSobre) {
         linksSobre.forEach(link => {
             link.addEventListener("click", function (e) {
-                e.preventDefault();
-                modalSobre.classList.add("ativo");
+                e.preventDefault(); // Impede a página de pular ou recarregar
+                modalSobre.classList.add("ativo"); // Abre o modal
             });
         });
 
+        // Botão Fechar (X)
         if (btnFecharSobre) {
-            btnFecharSobre.addEventListener("click", function () {
-                modalSobre.classList.remove("ativo");
-            });
+            btnFecharSobre.addEventListener("click", () => modalSobre.classList.remove("ativo"));
         }
 
-        modalSobre.addEventListener("click", function (e) {
-            if (e.target === modalSobre) {
-                modalSobre.classList.remove("ativo");
-            }
+        // Fechar ao clicar fora do conteúdo
+        modalSobre.addEventListener("click", (e) => {
+            if (e.target === modalSobre) modalSobre.classList.remove("ativo");
         });
     }
-
     // =======================================================
-    // 5. LÓGICA DE ABRIR E FECHAR O MODAL FEEDBACK 
+    // 5. MODAL FEEDBACK 
     // =======================================================
     const modalFeedback = document.getElementById("modal-feedback");
-    const btnFecharFeedback = document.querySelector("#modal-feedback .btn-fechar-modal, #fechar-modal-feedback");
+    const btnFecharFeedback = document.querySelector("#modal-feedback .btn-fechar-modal");
     const linksFeedback = document.querySelectorAll('a[href="#modal-feedback"]');
 
     if (modalFeedback) {
@@ -510,15 +552,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (btnFecharFeedback) {
-            btnFecharFeedback.addEventListener("click", function () {
-                modalFeedback.classList.remove("ativo");
-            });
+            btnFecharFeedback.addEventListener("click", () => modalFeedback.classList.remove("ativo"));
         }
 
-        modalFeedback.addEventListener("click", function (e) {
-            if (e.target === modalFeedback) {
-                modalFeedback.classList.remove("ativo");
-            }
+        modalFeedback.addEventListener("click", (e) => {
+            if (e.target === modalFeedback) modalFeedback.classList.remove("ativo");
         });
     }
 });

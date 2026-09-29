@@ -1,5 +1,7 @@
 /* =======================================================
    1. VARS E CONFIGURAÇÕES GERAIS 
+/* =======================================================
+   1. VARS E CONFIGURAÇÕES GERAIS 
    ======================================================= */
 :root {
     --verde: #3e815f;
@@ -228,20 +230,44 @@ body::before {
     margin: 0;
 
 }
-
+/* =======================================================
+   4. SEÇÃO: CLASSE DE VÍDEO (AJUSTE DE ALINHAMENTO DA LISTA)
+   ======================================================= */
 .lista-aprendizado {
     padding: 0;
-    margin-left: 0;
-    font-weight: 500;
-    font-size: 20px;
+    margin: 0;
+    list-style: none; /* Remove o marcador padrão do navegador */
+    font-size: 18px;
     width: 100%;
 }
 
 .lista-aprendizado li {
     margin-bottom: 20px;
-    display: flex;
-    width: 100%;
-    white-space: normal;
+    display: grid;
+    grid-template-columns: auto 1fr; /* Separa o ícone/rótulo da explicação */
+    gap: 10px;
+    align-items: baseline;
+    line-height: 1.5;
+    transition: color 0.3s ease;
+}
+
+/* Efeito hover suave na linha inteira */
+.lista-aprendizado li:hover {
+    color: #1a3325;
+}
+
+/* Rótulo destacado em destaque terracota */
+.lista-aprendizado li span {
+    color: var(--terracota);
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap; /* Evita que o título quebre no meio */
+}
+
+/* Marcador estilizado da lista */
+.lista-aprendizado li::marker {
+    color: var(--terracota);
+    font-size: 1.1em;
 }
 
 .coluna-video {
@@ -539,6 +565,30 @@ body::before {
 /* =======================================================
    6. SEÇÃO: GRAVADOR DE ÁUDIO E ONDA SONORA
    ======================================================= */
+   /* =======================================================
+   REPRODUTOR E TRANSCRIÇÃO DE ÁUDIO (DIAGNÓSTICO)
+   ======================================================= */
+.preview-audio-container {
+    background-color: #efe2d2; /* Cor de fundo suave da sua paleta */
+    padding: 12px 15px;
+    border-radius: 10px;
+    border: 1px solid rgba(62, 129, 95, 0.2);
+}
+
+.preview-audio-container p {
+    color: #3e815f; /* Verde da marca */
+}
+
+.transcricao-live-container {
+    background-color: #ffffff;
+    border-left: 4px solid #ec5a41; /* Destaque em tom alaranjado/coral */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+#texto-transcricao-espanhol {
+    min-height: 24px;
+    word-break: break-word;
+}
 .container-audio-recorder {
     background-color: #ffffff;
     border: 2px solid rgba(62, 129, 95, 0.2);
@@ -1095,62 +1145,62 @@ body::before {
 
 
 /* =======================================================
-   MODAL / PÁGINA OCULTA (SOBRE MÍ)
+   MODAL / PÁGINA OCULTA (SOBRE MÍ E FEEDBACKS)
    ======================================================= */
 
-/* Fundo escuro transparente que cobre a tela toda */
 .modal-oculto {
-    display: none;
-    /* Fica oculto por padrão */
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.75);
+    background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
-    z-index: 20000;
-    /* Fica acima de tudo no site */
+    display: none;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    z-index: 9999;
 }
 
-/* Quando o JS ativa a classe, o modal aparece suavemente */
 .modal-oculto.ativo {
     display: flex !important;
 }
 
-/* Caixinha branca/bege no centro da tela */
 .conteudo-modal {
-    background-color: var(--bege);
-    color: var(--verde);
-    padding: 30px;
-    border-radius: 25px;
-    max-width: 700px;
-    width: 100%;
     position: relative;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    text-align: center;
-    max-height: 90vh;
+    background-color: var(--bege);
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 700px;
+    width: 90%;
+    max-height: 85vh;
     overflow-y: auto;
-    /* Permite rolar se a tela do celular for pequena */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .conteudo-modal h2 {
     font-size: 32px;
     margin-bottom: 20px;
+    color: var(--verde);
 }
 
-/* Player do vídeo ajustado para a janela pop-up */
+/* Player do vídeo ajustado para a janela pop-up (com borda arredondada e brilho hover) */
 .player-video-modal {
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
     background: var(--verde);
-    border-radius: 15px;
+    border-radius: 20px;
+    border: 4px solid var(--verde);
     overflow: hidden;
     margin-bottom: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+}
+
+.player-video-modal:hover {
+    border-color: var(--terracota);
+    box-shadow: 0 0 25px rgba(236, 90, 65, 0.6);
 }
 
 .player-video-modal iframe {
@@ -1161,31 +1211,77 @@ body::before {
     height: 100%;
 }
 
-.texto-sobre-modal {
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0;
+/* Parágrafo "Sobre Mim" - Estilo Card Suave */
+/* Estilo Glassmorphism Moderno */
+.conteudo-modal p {
+    font-size: 16.5px;
+    line-height: 1.8;
+    color: var(--verde);
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 28px;
+    border-radius: 24px;
+    border: 1px solid rgba(239, 226, 210, 0.6);
+    margin: 25px 0 15px 0;
     text-align: justify;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04);
 }
 
-/* Botão de Fechar (X) no canto superior direito */
+/* Parágrafo "Sobre Mim" - Estilo Destaque Editorial */
+.texto-sobre-modal {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--verde);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 25px 30px;
+    border-left: 5px solid var(--terracota);
+    border-radius: 0 16px 16px 0;
+    margin: 20px 0;
+    text-align: left;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.texto-sobre-modal::first-letter {
+    font-size: 50px;
+    font-weight: 800;
+    color: var(--terracota);
+    float: left;
+    line-height: 1;
+    margin-right: 10px;
+    margin-top: 2px;
+}
 .btn-fechar-modal {
     position: absolute;
     top: 15px;
-    right: 20px;
-    background: transparent;
+    right: 15px;
+    width: 38px;
+    height: 38px;
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--verde, #1a3325);
     border: none;
-    font-size: 35px;
-    color: var(--verde);
-    cursor: pointer;
+    border-radius: 50%;
+    font-size: 22px;
     font-weight: bold;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    outline: none;
+    padding: 0;
+    z-index: 10;
 }
-
 .btn-fechar-modal:hover {
-    color: var(--terracota);
+    background-color: var(--terracota, #ec5a41);
+    color: #ffffff;
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 4px 12px rgba(236, 90, 65, 0.3);
 }
-
+.btn-fechar-modal:active {
+    transform: rotate(90deg) scale(0.95);
+}
 /* =======================================================
    11. REGRAS RESPONSIVAS PARA CELULAR (MAX-WIDTH: 768px)
    ======================================================= */
@@ -1350,24 +1446,3 @@ body::before {
         font-size: 12px !important;
     }
 }
-
-/* Se tiver a imagem das marcas d'água, descomente a linha abaixo */
-/* background-image: url('fundo-raquel.png'); background-repeat: repeat; background-attachment: fixed; */
-/*@import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
-    /color: blue;  /*cor do texto/
-/font-size: 30px; /*tamanho do texto/
-/font-weight: 400; /*espessura do texto/
-/font-family: " Roboto Flex", sans-serif;/*endereço da fonte do texto/
-/font-style: italic; /*estilo da fonte do texto/
-/* /espaçco das linhas do texto/
-/letter-spacing: 50px; /*espaço das letras do texto/
-/word-spacing: 10pxline-height: 30px;; /*espaço das palavra do texto/
-/text-align: center; /*Alinhamento do texto/
-/text-transform: capitalize; /*transformarção do texto/
-/*text-decoration: underline; /*decoração do texto
-    /*text-shadow 
-    <a href="">Sobre Mim</a>
-            <a href="">Feedback</a>
-            <a h 30px; espaço de dentro pra fora para baixo
-    padding-right: 10px; espaço de dentro pra fora a direita
-    padding-left: 5px; espaço de dentro pra fora a esquerda/*
